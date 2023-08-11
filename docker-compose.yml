@@ -6,14 +6,16 @@ services:
       context: ./neural-roots-ui
     volumes:
       - react_build:/neural-roots-app/neural-roots-ui/build
-      
+
   nginx:
     image: nginx:latest
     ports:
       - 80:8001
+      - 443:443
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - react_build:/var/www/neuralroots.in/
+      - ./neural-roots-ssl-self-cert:/etc/neural-roots-ssl-self-cert
     depends_on:
       - frontend
 volumes:
